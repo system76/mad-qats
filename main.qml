@@ -41,15 +41,14 @@ ApplicationWindow {
 
     }
 
-    SplitView {
+    Row {
+        visible: taskList.currentIndex == 0 ? false : true
         anchors.fill: parent
         spacing:4
         ScrollView {
             id:list
-            SplitView.minimumWidth: main.width * 0.10
-            SplitView.preferredWidth: main.width * 0.33
-            SplitView.maximumWidth: main.width * 0.40
-
+            width:parent.width * 0.6
+            height:parent.height
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.vertical.interactive: true
             clip:true
@@ -77,14 +76,45 @@ ApplicationWindow {
         }
         ScrollView {
             id:info
+            horizontalPadding: 10
+            verticalPadding: 10
+            width:parent.width * 0.4
+            height:parent.height
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            Column {
 
-            SplitView.minimumWidth: main.width * 0.20
-            SplitView.preferredWidth: main.width * 0.66
-            SplitView.maximumWidth: main.width * 0.70
-            Text {
-                 id: instructions
-                 text:"do stuff"
+                width: main.width * 0.45
+                spacing:5
+                Text {
+                    text: "<b>Instructions</b>"
                 }
+
+                TextArea {
+                     width:parent.width * 0.9
+                     id: instructions
+                     readOnly: true
+                     text: switch(taskList.currentIndex) {
+                        case 0: "do stuff";break;
+                        case 1: "do things asdfasdfa sdfas dfasdf asdf asdfasdf asdf asfs asdfasdf asdfasd fasdfa sdfas dfasdfa sdfasdf asdfa sfasf";break;
+                        case 2: "do lots of things";break;
+                        case 3: "do all the things";break;
+                        }
+                     wrapMode:TextEdit.WordWrap
+                    }
+               Text {
+                   text: "<b>Notes:</b>"
+               }
+                TextArea {
+                    id:notes
+                    width:parent.width * 0.85
+                    wrapMode: TextEdit.WordWrap
+                    height:400
+                    background: Rectangle {
+                        radius:4
+                        border.color: "lightgray"
+                    }
+                }
+            }
        }
     }
 
